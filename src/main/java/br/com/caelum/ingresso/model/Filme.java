@@ -20,6 +20,7 @@ public class Filme {
     private String nome;
     private Duration duracao;
     private String genero;
+    
     private BigDecimal preco;
     
     
@@ -31,7 +32,7 @@ public class Filme {
 
     }
     
-    public Filme(String nome, Duration duracao, String genero) {
+    public Filme(String nome, Duration duracao, String genero, BigDecimal preco) {
 		this.nome = nome;
 		this.duracao = duracao;
 		this.genero = genero;
@@ -70,9 +71,13 @@ public class Filme {
         this.genero = genero;
     }
 
-	public BigDecimal getPreco() {
-		return preco.setScale(2, RoundingMode.HALF_UP);
-	}
+    public BigDecimal getPreco() {
+    	if (preco != null) {
+    		return preco.setScale(2, RoundingMode.HALF_UP);
+    	}
+    	return BigDecimal.ZERO;
+    	
+    }
 
 	public void setPreco(BigDecimal preco) {
 		this.preco = preco;
