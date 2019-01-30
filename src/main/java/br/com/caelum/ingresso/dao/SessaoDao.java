@@ -32,5 +32,7 @@ public class SessaoDao {
 				
 		}
 		
-		
+		public Sessao findOne(Long sessaoId) {
+			return manager.find(Sessao.class, sessaoId);
+		}
 }

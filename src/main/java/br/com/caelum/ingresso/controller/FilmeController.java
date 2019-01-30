@@ -2,8 +2,10 @@ package br.com.caelum.ingresso.controller;
 
 import br.com.caelum.ingresso.dao.FilmeDao;
 import br.com.caelum.ingresso.dao.SessaoDao;
+import br.com.caelum.ingresso.model.DetalhesDoFilme;
 import br.com.caelum.ingresso.model.Filme;
 import br.com.caelum.ingresso.model.Sessao;
+import br.com.caelum.ingresso.rest.OmdbClient;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,6 +32,10 @@ public class FilmeController {
     
     @Autowired
     private SessaoDao SessaoDao;
+    
+    @Autowired
+    private OmdbClient client;
+    
     
     @GetMapping("/filme/em-cartaz")
     public ModelAndView emCartaz() {
@@ -60,10 +66,15 @@ public class FilmeController {
     public ModelAndView detalhes(@PathVariable("id") Integer id){
 
         ModelAndView modelAndView = new ModelAndView("filme/detalhe");
+        
         Filme filme = filmeDao.findOne(id);
+        
         List<Sessao> sessoes = SessaoDao.buscaSessoesDoFilme(filme);
         
+        Optional<DetalhesDoFilme> detalhesDoFilme = client.request(filme, DetalhesDoFilme.class);
+        
         modelAndView.addObject("sessoes", sessoes);
+        modelAndView.addObject("detalhes", detalhesDoFilme.orElse(new DetalhesDoFilme()));
         
         return modelAndView;
     }

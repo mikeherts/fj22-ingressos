@@ -28,9 +28,9 @@ public class GerenciadorDaSessaoTest {
 		this.rogueOne = new Filme("Rogue One", Duration.ofMinutes(120), "SCI-FI", BigDecimal.ONE);
 		this.sala3D = new Sala("Sala 3D", BigDecimal.TEN);
 		
-		this.sessaoDasDez = new Sessao(LocalTime.parse("10:00:00"), sala3D, rogueOne);
-		this.sessaoDasTreze = new Sessao(LocalTime.parse("13:00:00"), sala3D, rogueOne);
-		this.sessaoDasDezoito = new Sessao(LocalTime.parse("18:00:00"),  sala3D, rogueOne);
+		this.sessaoDasDez = new Sessao(LocalTime.parse("10:00:00"), rogueOne, sala3D);
+		this.sessaoDasTreze = new Sessao(LocalTime.parse("13:00:00"), rogueOne, sala3D);
+		this.sessaoDasDezoito = new Sessao(LocalTime.parse("18:00:00"), rogueOne, sala3D);
 	}
 
 	@Test
@@ -44,7 +44,7 @@ public class GerenciadorDaSessaoTest {
 	@Test
 	public void garanteQueNaoDevePermitirSessoesTerminandoDentroDoHorarioDeUmaSessaoJaExistente() {
 		List<Sessao> sessoes = Arrays.asList(sessaoDasDez);
-		Sessao sessao = new Sessao(sessaoDasDez.getHorario().minusHours(1), sala3D, rogueOne);
+		Sessao sessao = new Sessao(sessaoDasDez.getHorario().minusHours(1), rogueOne, sala3D);
 		GerenciadorDeSessao gerenciador = new GerenciadorDeSessao(sessoes);
 		Assert.assertFalse(gerenciador.cabe(sessao));
 		
@@ -54,7 +54,7 @@ public class GerenciadorDaSessaoTest {
 	public void garanteQueNaoDevePermitirSessoesIndicandoDentrodoHorarioDeUmaSessaoJaExistente() {
 		List<Sessao> sessoesDaSala = Arrays.asList(sessaoDasDez);
 		GerenciadorDeSessao gerenciador = new GerenciadorDeSessao(sessoesDaSala);
-		Sessao sessao = new Sessao(sessaoDasDez.getHorario().plusHours(1), sala3D, rogueOne);
+		Sessao sessao = new Sessao(sessaoDasDez.getHorario().plusHours(1), rogueOne, sala3D);
 		Assert.assertFalse(gerenciador.cabe(sessao));		
 	}
 	
