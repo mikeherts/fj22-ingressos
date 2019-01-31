@@ -2,7 +2,6 @@ package br.com.caelum.ingresso.model;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -71,4 +70,21 @@ public class Ingresso {
 		this.lugar = lugar;
 	}
 
+	public Sessao getSessao() {
+		return sessao;
+	}
+	
+	public void setSessao(Sessao sessao) {
+		this.sessao = sessao;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	
+	
 }
